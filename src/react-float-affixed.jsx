@@ -181,8 +181,6 @@ const bridgeProps = {
         bottom: -bridgeSize,
         left: clamp(anchorRect.min.x - translation.x + (anchorRect.width * 0.5) - bridgeElev, 0, popupRect.width - bridgeBreadth),
         transform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(0,0,0)`,
-        WebkitTransform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(0,0,0)`,
-        msTransform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(0,0,0)`
     }),
     under: (anchorRect, popupRect, translation) => ({
         height: bridgeSize,
@@ -190,8 +188,6 @@ const bridgeProps = {
         top: -bridgeSize,
         left: clamp(anchorRect.min.x - translation.x + (anchorRect.width * 0.5) - bridgeElev, 0, popupRect.width - bridgeBreadth),
         transform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(180,0,0)`,
-        WebkitTransform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(180,0,0)`,
-        msTransform: `translate(${bridgeBreadth * 0.5},${bridgeElev * 0.5}),rotate(180,0,0)`
     }),
     left: (anchorRect, popupRect, translation) => ({
         height: bridgeSize * 2,
@@ -199,8 +195,6 @@ const bridgeProps = {
         right: -bridgeSize,
         top: clamp(anchorRect.min.y - translation.y + (anchorRect.height * 0.5) - bridgeElev, 0, popupRect.height - bridgeBreadth),
         transform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(-90,0,0)`,
-        WebkitTransform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(-90,0,0)`,
-        msTransform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(-90,0,0)`
     }),
     right: (anchorRect, popupRect, translation) => ({
         height: bridgeSize * 2,
@@ -208,8 +202,6 @@ const bridgeProps = {
         left: -bridgeSize,
         top: clamp(anchorRect.min.y - translation.y + (anchorRect.height * 0.5) - bridgeElev, 0, popupRect.height - bridgeBreadth),
         transform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(90,0,0)`,
-        WebkitTransform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(90,0,0)`,
-        msTransform: `translate(${bridgeElev * 0.5},${bridgeBreadth * 0.5}),rotate(90,0,0)`
     }),
 }
 
@@ -220,7 +212,7 @@ function makeBridge(state, props) {
     // get the relevant values from the state
     const { schemeName, anchorRect, popupRect, translation } = state;
     // calculate bridge location
-    let { transform, WebkitTransform, msTransform, ...bridgeStyle } = bridgeProps[schemeName](anchorRect, popupRect, translation);
+    let { transform, ...bridgeStyle } = bridgeProps[schemeName](anchorRect, popupRect, translation);
 
     let trianglePath = "M -20.5,-11 0,9.5 20.5,-11 Z";
 
@@ -237,7 +229,7 @@ function makeBridge(state, props) {
             }}>
             <svg
                 style={{width: bridgeStyle.width, height: bridgeStyle.height, overflow:'visible'}}>
-                <g transform={transform} WebkitTransform={WebkitTransform} msTransform={msTransform}>
+                <g transform={transform}>
                     <path
                         style={{fill:'white'}}
                         d={trianglePath} />
@@ -260,8 +252,6 @@ var FloatAffixed = React.createClass({
             ...style,
             ...styles.required,
             transform: 'translate('+this.state.translation.x+'px,'+this.state.translation.y+'px)',
-            WebkitTransform: 'translate('+this.state.translation.x+'px,'+this.state.translation.y+'px)',
-            msTransform: 'translate('+this.state.translation.x+'px,'+this.state.translation.y+'px)'
         };
         var edgeFactor = edgeFactors[this.state.schemeName || "unknown"];
         var translation = this.state.translation;
